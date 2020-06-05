@@ -74,7 +74,7 @@ router.delete("/:productId", async (req, res, next) => {
     const deletedProduct = await productsService.deleteProduct({ productId });
 
     res.status(200).json({
-      data: productsMock[0],
+      data: deletedProduct,
       message: "product deleted",
     });
   } catch (error) {

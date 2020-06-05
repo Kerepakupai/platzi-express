@@ -1,8 +1,14 @@
 const express = require("express");
 const path = require("path");
 
+const config = require("./config");
 const productsRouter = require("./routes/products");
 const productsApiRouter = require("./routes/api/products");
+const {
+  logErrors,
+  clientErrorHandler,
+  errorHandler,
+} = require("./utils/middlewares/errorsHandlers");
 
 // app
 const app = express();
@@ -26,7 +32,12 @@ app.get("/", (req, res) => {
   res.redirect("/products");
 });
 
+// error handlers
+app.use(logErrors);
+app.use(clientErrorHandler);
+app.use(errorHandler);
+
 // server init
-const server = app.listen(3000, () => {
+const server = app.listen(config.port, () => {
   console.log(`Escuchando en: http://localhost:${server.address().port}`);
 });
